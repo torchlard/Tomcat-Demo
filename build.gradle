@@ -1,0 +1,95 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'application'
+apply plugin: 'com.bmuschko.tomcat'
+
+
+mainClassName = 'ch01.Entry'
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+  repositories {
+      jcenter()
+  }
+
+  dependencies {
+      classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+  }
+}
+
+
+dependencies {
+  def tomcatVersion = '9.0.1'
+  tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+        "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+        "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+  compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+        
+}
+
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+}
+
+
+sourceSets {
+  //  main.compileClasspath += configurations.provided
+  // test.compileClasspath += configurations.provided
+  // test.runtimeClasspath += configurations.provided
+  main {
+    java {
+      srcDirs = ['src/main/java']
+    }
+    resources {
+      srcDirs = ['src/main/resources']
+    }
+  }
+}
+
+jar {
+  baseName = 'app'
+  manifest {
+    attributes 'Main-Class': mainClassName
+  }
+}
+
+// task clientJar(type: Jar){
+//   baseName = 'client'
+//   from sourceSets.main.output
+//   manifest {
+//     attributes 'Main-Class': 'network.EpollClient'
+//   }
+// }
+
+// task serverJar(type: Jar){
+//   baseName = 'server'
+//   from sourceSets.main.output
+//   manifest {
+//     attributes 'Main-Class': 'network.EpollServer'
+//   }
+// }
+
+// task bm {
+//   dependsOn 'clientJar'
+//   dependsOn 'serverJar'
+// }
+
+// test {
+//   useJUnitPlatform {
+//     includeEngines 'junit-jupiter'
+//   }
+// }
+
+
+
+
+
