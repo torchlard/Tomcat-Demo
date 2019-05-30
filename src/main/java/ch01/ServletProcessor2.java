@@ -7,6 +7,8 @@ import java.net.URLClassLoader;
 import java.net.URLStreamHandler;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 public class ServletProcessor2 {
   public void process(Request request, Response response ){
@@ -37,7 +39,15 @@ public class ServletProcessor2 {
       System.out.println(e.toString());
     }
 
-    Servlet servlet = null;
+    ServletRequest requestFacade = (ServletRequest) new RequestFacade(request);
+    ServletResponse responseFacade = (ServletResponse) new ResponseFacade(response);
+    
+    try {
+      Servlet servlet = (Servlet) myClass.newInstance();
+      servlet.service(requestFacade, responseFacade);
+    } catch (Throwable e){
+      e.printStackTrace();
+    }
     
     
   }

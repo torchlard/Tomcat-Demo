@@ -4,7 +4,7 @@ apply plugin: 'application'
 apply plugin: 'com.bmuschko.tomcat'
 
 
-mainClassName = 'ch01.Entry'
+mainClassName = 'ch01.HttpServer1'
 
 repositories {
   mavenCentral()
