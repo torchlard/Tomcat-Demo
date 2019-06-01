@@ -31,7 +31,8 @@ dependencies {
         "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
   compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-        
+  compile group: 'org.apache.tomcat', name: 'tomcat-catalina', version: '9.0.20'
+
 }
 
 
